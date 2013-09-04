@@ -3,9 +3,9 @@ node_modules
 dist
 .tmp
 app/bower_components
+app/styles/main.css
 
 lib-cov
-*.css
 *.seed
 *.log
 *.csv
