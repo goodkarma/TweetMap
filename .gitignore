@@ -1,10 +1,8 @@
-NOTES/
-node_modules/
-logs/
-public/.sass-cache/
-public/images/
-public/fonts/
-public/robots.txt
+notes
+node_modules
+dist
+.tmp
+app/bower_components
 
 lib-cov
 *.css
@@ -16,10 +14,9 @@ lib-cov
 *.pid
 *.gz
 
-pids
-logs
-results
-
 npm-debug.log
-dump.rdb
-runserver.sh
+.DS_Store
+
+# Temporary files for Alpha version
+pre-register.txt
+o-auth.txt

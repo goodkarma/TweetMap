@@ -1,0 +1,52 @@
+<div id="wrap">
+  <div class="container">
+
+    <header>
+      <h1>TweetMap</h1>
+    </header>
+
+    <div class="content">
+      <p>
+        TweetMap lets you easily embed<br class="res-show"/> a live map on your site,<br>
+        showing the latest tweets you want,<br>
+        filtered by hashtags or usernames.
+      </p>
+
+      <!-- Login -->
+      <a data-toggle="modal" href="#login-form" class="btn btn-primary btn-lg">Find out more</a>
+      <div class="modal fade" id="login-form">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">TweetMap</h4>
+            </div>
+            <div class="modal-body">
+              <p>TweetMap it's an open source project<br>
+                and currently a work in progress.</p>
+              <p>
+                I've implemented the basic functionality<br>
+                in less than two weeks at Hack Reactor</p>
+
+              <p>If you'd like to be notified once all the features
+                are ready, please leave your email here below</p>
+
+              <form name="input" action="pre-register" method="post">
+                <div class="input-group">
+                  <span class="input-group-addon input-lg"><i class="icon-envelope-alt"></i></span>
+                  <input name="email" type="email" class="form-control input-lg" placeholder="Email">
+                </div>
+                <input type="submit" value="Request an invite" class="btn btn-primary"></input>
+              </form>
+            </div><!-- /.modal-body -->
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+      <!-- /Login -->
+
+    </div><!-- /.content -->
+  </div><!-- /.container -->
+
+  <div id="map" class="leaflet-container leaflet-fade-anim" style="height:400px; width:auto"></div>
+
+</div><!-- /#wrap -->

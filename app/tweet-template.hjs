@@ -1,0 +1,8 @@
+<a href="{{link}}" target="_blank">
+  <div class="tweet-container">
+    <img src="{{profileImage}}" class="img-rounded">
+    <strong>{{name}}</strong><small class="date">{{date}}</small><br>
+    <small> @{{username}}</small>
+    <p>{{text}}</p>
+  </div>
+</a>
