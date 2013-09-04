@@ -1,0 +1,18 @@
+{
+  "name": "TweetMap",
+  "version": "0.0.1",
+  "dependencies": {
+    "json3": "~3.2.5",
+    "es5-shim": "~2.1.0",
+    "angular": "v1.2.0-rc.1",
+    "angular-animate": "v1.2.0-rc.1",
+    "angular-cookies": "v1.2.0-rc.1",
+    "angular-resource": "v1.2.0-rc.1",
+    "angular-route": "v1.2.0-rc.1",
+    "angular-sanitize": "v1.2.0-rc.1"
+  },
+  "devDependencies": {
+    "angular-mocks": "v1.2.0-rc.1",
+    "angular-scenario": "v1.2.0-rc.1"
+  }
+}
