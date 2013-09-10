@@ -5,7 +5,6 @@ var app = express();
 
 require('./config/environments.js')(app);
 require('./config/middleware.js')(app);
-require('./config/db.js')(app);
 require('./config/routes.js')(app);
 
 http.createServer(app).listen(app.get('port'), function(){

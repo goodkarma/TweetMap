@@ -1,7 +1,8 @@
 var path = require('path');
 var cors = require('../controllers/cors.js');
 var feed = require('../controllers/feed.js');
-var preRegister = require('../controllers/preRegister.js');
+var preRegister = require('../controllers/pre-register.js');
+var dbTest = require('../controllers/db-test.js');
 
 module.exports = function(app) {
 
