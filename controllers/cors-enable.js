@@ -1,5 +1,3 @@
-var cors = module.exports = {};
-
 var defaultCorsHeaders = {
   "access-control-allow-origin": "*",
   "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
@@ -7,6 +5,6 @@ var defaultCorsHeaders = {
   "access-control-max-age": 10 // Seconds
 };
 
-cors.approve = function (req, res) {
+module.exports = function(req, res) {
   res.set(defaultCorsHeaders);
 };
