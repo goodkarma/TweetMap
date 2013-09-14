@@ -16,6 +16,7 @@
     "toobusy": "~0.2.3",
     "http-get": "~0.5.10",
     "redis": "~0.8.4",
+    "q": "~0.9.7",
     "karma-chrome-launcher": "~0.1.0",
     "karma-firefox-launcher": "~0.1.0",
     "karma-script-launcher": "~0.1.0",

@@ -1,34 +1,70 @@
 var redis = require('redis');
+var q = require('q');
+
 var db = redis.createClient();
 
-var dbN = global.dbName; // Set what Redis db prefix to use, based on environment (dev or production)
+var dbPrefix = global.dbPrefix; // Set what Redis db prefix to use, based on environment (dev or production)
+var userPrefix = dbPrefix + ':user:';
+var timerPrefix = dbPrefix + ':timer:';
+var idPrefix = dbPrefix + ':id_counter';
 
 var user = module.exports = {};
 
-user.getFeed = function (id) {
-  var feedArr = dbN + ':feed:' + id;
-  db.lrange(feedArr, 0, 14);
-  return db.ltrim(feedArr, 0, 14);
+user.newId = function() {
+  var deferred = q.defer();
+  db.incr(idPrefix, function(err, reply) {
+    if (err) deferred.reject(err);
+    else deferred.resolve(reply);
+  });
+  return deferred.promise;
 };
 
-user.checkTimer = function (id) {
-  var timerKey = dbN + ':timer:' + id;
-  return db.ttl(timerKey);
+user.exists = function(id) {
+  var userKey = userPrefix + id;
+  var deferred = q.defer();
+  db.exists(userKey, function(err, reply) {
+    if (err) deferred.reject(err);
+    else deferred.resolve(reply);
+  });
+  return deferred.promise;
 };
 
-user.startTimer = function (id) {
-  var timerKey = dbN + ':timer:' + id;
-  db.setex(timerKey, 900, 1);
+user.get = function(id) {
+  var userKey = userPrefix + id;
+  var deferred = q.defer();
+  db.hgetall(userKey, function(err, reply) {
+    if (err) deferred.reject(err);
+    else deferred.resolve(reply);
+  });
+  return deferred.promise;
 };
 
-user.store = function (id, email, hashWord) {
-  var userObj = dbN + ':user:' + id;
-  db.hmset(userObj, "id", id, "email", email, "hashWord", hashWord);
+user.store = function(userObj) {
+  var userKey = userPrefix + id;
+  db.hmset(userKey, userObj);
 };
 
-user.delete = function (id) {
-  var userObj = dbN + ':user:' + id;
-  var feedArr = dbN + ':feed:' + id;
-  var timerKey = dbN + ':timer:' + id;
-  db.del(userObj, feedArr, timerKey);
+user.delete = function(id) {
+  var userKey = userPrefix + id;
+  db.del(userKey);
+};
+
+user.checkTimer = function(id) {
+  var timerKey = timerPrefix + id;
+  var deferred = q.defer();
+  db.get(timerKey, function(err, reply) {
+    if (err) deferred.reject(err);
+    else deferred.resolve(reply);
+  });
+  return deferred.promise;
+};
+
+user.setTimer = function(id) {
+  var timerKey = timerPrefix + id;
+  var deferred = q.defer();
+  db.setex(timerKey, 900, 1, function(err, reply) {
+    if (err) deferred.reject(err);
+    else deferred.resolve(reply);
+  });
+  return deferred.promise;
 };

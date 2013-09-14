@@ -1,18 +1,45 @@
-var cors = require('./cors.js');
-var db = require('../models/user.js');
-var twApi = require('../services/tw-api.js');
-var fs = require('fs');
-var path = require('path');
+var corsEnable = require('./cors-enable.js');
+var user = require('../models/user.js');
+var feed = require('../models/feed.js');
+var interval = require('../services/tw-api-interval.js');
 
-var feed = module.exports = {};
-
-feed.stream = function (req, res) {
-  cors.approve(req, res);
-  //temporary oAuth token storage for Alpha version
-  global.oAuth || (global.oAuth = fs.readFileSync(path.join(__dirname, '../o-auth.txt')));
-  var auth = global.oAuth;
-  // Check DB
-  // user.getFeed(req.query.id);
-  // If it's needed grab tweets from API
-  twApi.get(req, res, auth);
+module.exports = function(req, res) {
+  var id = req.params.id;
+  // Check if user exists, otherwise send 404
+  user.exists(id).then(
+    function(reply) {
+      if (reply) {
+        corsEnable(req, res);
+        user.setTimer(id).then(
+          function() {
+            // If interval is already active,
+            // fetch feed from database and send response
+            if (interval[id]) {
+              feed.get(id).then(
+                function(reply) {
+                  res.json(reply);
+                }
+              );
+            // Otherwise start interval, wait 2 sec,
+            // fetch feed from database and send response
+            } else {
+              interval.start(id);
+              setTimeout(function() {
+                feed.get(id).then(
+                  function(reply) {
+                    res.json(reply);
+                  }
+                );
+              }, 2000);
+            }
+          }
+        );
+      } else {
+        res.send(404);
+      }
+    },
+    function(err) {
+      console.log(err);
+    }
+  );
 };
