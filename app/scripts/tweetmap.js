@@ -3,6 +3,8 @@ $(function() {
 
     var tweetTemplate;
     var preLoad = {};
+    var errorCount = 0;
+    var errorMsg = "TweetMap error - The Twitter API doesn't return any tweet for your query string";
 
     var map = L.map('map').setView([37.775, -122.4183], 2);
     // // Black and white map
@@ -30,6 +32,8 @@ $(function() {
       var len = tweetsArr.length;
       var count = 0;
 
+      len === 0 && errorCount++;
+
       // Pre-load images
       for (var i = 0; i < tweetsArr.length; i++) {
         preLoad[i] = new Image().src = tweetsArr[i]['profileImage'];
@@ -45,7 +49,7 @@ $(function() {
             placeTweet(tweetsArr[count]);
           }, 6000);
         } else {
-          getTweets();
+          errorCount < 3 ? getTweets() : console.log(errorMsg);
         }
       }
       placeTweet(tweetsArr[count]);

@@ -31,6 +31,8 @@ module.exports = function filter(data) {
       } else {
         result[n]['geo'] = data[i]['retweeted_status']['user']['location'];
       }
+      // Store tweet id
+      result[n]['id'] = data[i]['id_str'];
       // Store tweet text
       result[n]['text'] = data[i]['text'];
       // Store tweet url
