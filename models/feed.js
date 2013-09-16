@@ -14,7 +14,7 @@ feed.get = function(id) {
   db.lrange(feedKey, 0, 14, function(err, reply) {
     if (err) deferred.reject(err);
     else {
-      for (var i = 0; i < reply.length; i++) {
+      for (var i = 0, len = reply.length; i < len; i++) {
         reply[i] = JSON.parse(reply[i]);
       }
       deferred.resolve(reply);
@@ -24,12 +24,38 @@ feed.get = function(id) {
 };
 
 feed.store = function(id, feedArr) {
+  var multi = db.multi();
   var feedKey = feedPrefix + id;
+  // Keep the right chronological order
   feedArr.reverse();
-  for (var i = 0; i < feedArr.length; i++) {
-    db.lpush(feedKey, JSON.stringify(feedArr[i]));
+  // If there's already a feed, generate a map of the contained
+  // tweet ids, to avoid storing (and displaying) duplicates
+  db.lrange(feedKey, 0, 14, function(err, reply) {
+    if (reply.length !== 0) {
+      var idMap = {};
+      for (var i = 0; i < reply.length; i++) {
+        idMap[JSON.parse(reply[i]).id] = 1;
+      }
+      checkAndStore(feedArr, idMap);
+    } else {
+      checkAndStore(feedArr);
+    }
+  });
+  function checkAndStore(feedArr, idMap) {
+    if (idMap) {
+      for (var i = 0; i < feedArr.length; i++) {
+        if (!idMap[feedArr[i].id]) {
+          multi.lpush(feedKey, JSON.stringify(feedArr[i]));
+        }
+      }
+    } else {
+      for (var i = 0; i < feedArr.length; i++) {
+        multi.lpush(feedKey, JSON.stringify(feedArr[i]));
+      }
+    }
+    multi.ltrim(feedKey, 0, 14);
+    multi.exec();
   }
-  db.ltrim(feedKey, 0, 14);
 };
 
 feed.delete = function(id) {

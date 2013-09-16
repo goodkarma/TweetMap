@@ -25,17 +25,14 @@ module.exports = function filter(data) {
       var tempDate = [];
       // Store geo data
       if (geoFlag === 1) {
-        result[n]['geo']['lat'] = data[i]['geo']['coordinates'][0];
-        result[n]['geo']['lon'] = data[i]['geo']['coordinates'][1];
+        result[n]['geo'] = data[i]['geo']['coordinates'].toString();
       } else if (geoFlag === 2) {
-        tempLoc = data[i]['user']['location'].split(',');
-        result[n]['geo']['lat'] = tempLoc[0];
-        result[n]['geo']['lon'] = tempLoc[1];
+        result[n]['geo'] = data[i]['user']['location'];
       } else {
-        tempLoc = data[i]['retweeted_status']['user']['location'].split(',');
-        result[n]['geo']['lat'] = tempLoc[0];
-        result[n]['geo']['lon'] = tempLoc[1];
+        result[n]['geo'] = data[i]['retweeted_status']['user']['location'];
       }
+      // Store tweet id
+      result[n]['id'] = data[i]['id_str'];
       // Store tweet text
       result[n]['text'] = data[i]['text'];
       // Store tweet url
