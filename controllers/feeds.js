@@ -40,7 +40,6 @@ var getFeed = module.exports = function(req, res) {
             // fetch feed from database and send response
             } else {
               interval.start(id);
-              interval.operate(id);
               setTimeout(function() {
                 feed.get(id).then(
                   function(reply) {
