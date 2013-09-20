@@ -1,6 +1,7 @@
 var path = require('path');
 var corsEnable = require('../controllers/cors-enable.js');
 var feeds = require('../controllers/feeds.js');
+var authTokens = require('../controllers/auth-tokens.js');
 var preRegister = require('../controllers/pre-register.js');
 
 module.exports = function(app) {
@@ -13,6 +14,8 @@ module.exports = function(app) {
     res.sendfile(path.join(__dirname, '../app/tweet-template.hjs'));
   });
   app.options('/tweet-template', corsEnable);
+
+  app.get('/auth-token/:id', authTokens);
 
   app.post('/pre-register', preRegister);
 
