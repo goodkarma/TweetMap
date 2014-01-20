@@ -7,9 +7,9 @@
     "name": "Alessandro Zanardi",
     "url": "http://github.com/pensierinmusica"
   },
-  "repository" : {
-    "type" : "git",
-    "url" : "http://github.com/goodkarma/TweetMap"
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/goodkarma/TweetMap"
   },
   "private": true,
   "scripts": {
@@ -19,6 +19,7 @@
     "express": "~3.3.5",
     "toobusy": "~0.2.3",
     "http-get": "~0.5.10",
+    "request": "~2.33.0",
     "redis": "~0.8.4",
     "q": "~0.9.7",
     "karma-chrome-launcher": "~0.1.0",
