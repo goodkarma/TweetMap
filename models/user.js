@@ -39,7 +39,7 @@ user.get = function(id) {
   return deferred.promise;
 };
 
-user.store = function(userObj) {
+user.store = function(id, userObj) {
   var userKey = userPrefix + id;
   db.hmset(userKey, userObj);
 };
