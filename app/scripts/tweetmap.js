@@ -16,14 +16,14 @@ $(function() {
     // document.getElementsByClassName('leaflet-control-attribution')[0].innerHTML = '<a href="http://tweetmap.goodkarma.net" target="_blank" title="Tweet Map">TweetMap</a> - Powered by <a href="http://leafletjs.com" target="_blank" title="Leaflet">Leaflet</a>';
 
     $.ajax({
-      url: 'http://localhost:3000/tweet-template',
+      url: '/tweet-template',
       success: function(data) {
         tweetTemplate = data;
       }
     })
 
     function getTweets() {
-      $.get('http://localhost:3000/feed/1', function(tweetsArr) {
+      $.get('/feed/1', function(tweetsArr) {
         showTweets(tweetsArr);
       });
     }
