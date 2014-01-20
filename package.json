@@ -5,7 +5,11 @@
   "license": "MIT",
   "author": {
     "name": "Alessandro Zanardi",
-    "url": "http://github.com/goodkarma/tweetmap"
+    "url": "http://github.com/pensierinmusica"
+  },
+  "repository" : {
+    "type" : "git",
+    "url" : "http://github.com/goodkarma/TweetMap"
   },
   "private": true,
   "scripts": {
